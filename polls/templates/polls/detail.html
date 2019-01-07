@@ -1,0 +1,33 @@
+{% comment %} the template system uses dot-lookup syntax to access variable attributes. in the example of {{question.question_text}}, first django does a dictionary lookup on the object question. failling taht, it tries an attributes lookup- which works, in this case if attribute lookup had failed, it would've tried a list-index loopup
+
+method calling happens in tthe {% for %} loop:question.choice_set.all is interpreted as the python code question.choice_set.all(), which returns an iterable of Choice objects and is suitable for use in the {% for %} tag
+{% endcomment %}
+
+
+{% comment %}
+<h1>{{ question.question_text }}</h1>
+<ul>
+  {% for choice in question.choice_set.all %}
+    <li>{{ choice.choice_text }}</li>
+  {% endfor %}
+</ul> {% endcomment %}
+
+
+
+
+{% comment %} Write a simple form {% endcomment %}
+<h1>{{ question.question_text }}</h1>
+{% if error_message %}
+<p><strong> {{ error_message }} </strong></p>
+{% endif %}
+
+<form action="{% url 'polls:vote' question.id %}" method="post">
+{% csrf_token %}
+{% comment %} since creating a post form(which can have the effect of modifying data), we need to worry about cross site request forgeries. However django comes with a very easy-to-use system for protecting against it. Therefor, all post form that are targetd at internal URLS should use the {% csrf_token%} {% endcomment %}
+
+{% for choice in question.choice_set.all %}
+  <input type='radio' name='choice' id="choice{{ forloop.counter }}" value="{{choice.id}}">
+  <label for="choice{{ forloop.counter }}">{{choice.choice_text}}</lable> <br>
+{% endfor %}
+<input type='submit', value='Vote'>
+</form>

@@ -1,0 +1,9 @@
+li a {
+  color: green;
+}
+
+body {
+  background: white url("images/background.gif") no-repeat;
+}
+
+/* s. Create an images subdirectory in the polls/static/polls/ directory. Inside this directory, put an image called background.gif. In other words, put your image in polls/static/polls/images/background.gif. */
